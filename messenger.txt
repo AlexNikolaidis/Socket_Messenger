@@ -1,0 +1,16 @@
+tha leitourgei enas kentrikos server, ola ta minimata tha stelnontai mono ston server
+meta o server tha diavazei sto header tou minimatos ton proorismo tou kai tha proothei
+ston user me to katallilo id
+
+molis syndethei o client sto server:
+1 -> client stelnei CONN_REQ dinontas to onoma tou
+2 -> server apantaei me CONN_RESP legontas ston client an mporei na syndethei kai an mporei tote
+tou dinei ena monadiko user_id
+#################
+ola ta minimata tha exoun header, to id mesa sto header tha einai panta to id tou user pou
+esteile to minima
+o server tha exei panta id=0
+assigned user ids > 0
+
+#################
+3 -> o user

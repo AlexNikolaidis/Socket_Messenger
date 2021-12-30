@@ -1,0 +1,85 @@
+syntax = "proto2";
+
+package messenger;
+
+message project_message {
+	oneof msg {
+              conn_req conn_req_msg = 1;
+              conn_resp conn_resp_msg = 2;
+              data data_msg = 3;
+              data_ack data_ack_msg = 4;
+              discover_req discover_req_msg = 5;
+              discover_resp discover_resp_msg = 6;
+              active active_msg = 7;
+              exit exit_msg = 8;
+	}
+}
+
+message msg_header{
+  optional uint32 user_id = 1;
+  optional msg_type type = 2;
+}
+
+enum msg_type{
+  //Type of messages
+  CONN_REQ = 1;
+  CONN_RESP = 2;
+  DATA  = 3;
+  DATA_ACK = 4;
+  DISCOVER_REQ = 5;
+  DISCOVER_RESP = 6;
+  ACTIVE = 7;
+  EXIT = 8;
+}
+
+enum msg_direction{
+  SUCCESSFUL = 1;
+  UNSUCCESSFUL = 2;
+}
+
+message user
+{
+  required uint32 id = 1;
+  required string name = 2;
+}
+
+message conn_req{
+  required msg_header header = 1;
+  required string name = 2;
+}
+
+message conn_resp{
+  required msg_header header = 1;
+  required uint32 assigned_id = 2;
+  optional msg_direction direction = 3;
+}
+
+message data{
+  required msg_header header = 1;
+  repeated user dest_user = 2;
+  required string message = 3;
+}
+
+message data_ack{
+  required msg_header header = 1;
+  required user dest_user = 2;
+  optional msg_direction direction = 3;
+}
+
+message discover_req{
+  required msg_header header = 1;
+}
+
+message discover_resp{
+  required msg_header header = 1;
+  repeated user msg_user = 2;
+}
+
+message active{
+  required msg_header header = 1;
+  optional uint32 period = 2;
+}
+
+message exit{
+  required msg_header header = 1;
+}
