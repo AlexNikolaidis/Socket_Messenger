@@ -37,7 +37,7 @@ enum msg_direction{
   UNSUCCESSFUL = 2;
 }
 
-message user
+message msg_user
 {
   required uint32 id = 1;
   required string name = 2;
@@ -56,13 +56,13 @@ message conn_resp{
 
 message data{
   required msg_header header = 1;
-  repeated user dest_user = 2;
+  repeated msg_user dest_user = 2;
   required string message = 3;
 }
 
 message data_ack{
   required msg_header header = 1;
-  required user dest_user = 2;
+  required msg_user dest_user = 2;
   optional msg_direction direction = 3;
 }
 
@@ -72,7 +72,7 @@ message discover_req{
 
 message discover_resp{
   required msg_header header = 1;
-  repeated user msg_user = 2;
+  repeated msg_user user = 2;
 }
 
 message active{
