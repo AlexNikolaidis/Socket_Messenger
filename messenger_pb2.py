@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fmessenger.proto\x12\tmessenger\"\x80\x03\n\x0fproject_message\x12+\n\x0c\x63onn_req_msg\x18\x01 \x01(\x0b\x32\x13.messenger.conn_reqH\x00\x12-\n\rconn_resp_msg\x18\x02 \x01(\x0b\x32\x14.messenger.conn_respH\x00\x12#\n\x08\x64\x61ta_msg\x18\x03 \x01(\x0b\x32\x0f.messenger.dataH\x00\x12+\n\x0c\x64\x61ta_ack_msg\x18\x04 \x01(\x0b\x32\x13.messenger.data_ackH\x00\x12\x33\n\x10\x64iscover_req_msg\x18\x05 \x01(\x0b\x32\x17.messenger.discover_reqH\x00\x12\x35\n\x11\x64iscover_resp_msg\x18\x06 \x01(\x0b\x32\x18.messenger.discover_respH\x00\x12\'\n\nactive_msg\x18\x07 \x01(\x0b\x32\x11.messenger.activeH\x00\x12#\n\x08\x65xit_msg\x18\x08 \x01(\x0b\x32\x0f.messenger.exitH\x00\x42\x05\n\x03msg\"@\n\nmsg_header\x12\x0f\n\x07user_id\x18\x01 \x01(\r\x12!\n\x04type\x18\x02 \x01(\x0e\x32\x13.messenger.msg_type\"$\n\x08msg_user\x12\n\n\x02id\x18\x01 \x02(\r\x12\x0c\n\x04name\x18\x02 \x02(\t\"?\n\x08\x63onn_req\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12\x0c\n\x04name\x18\x02 \x02(\t\"t\n\tconn_resp\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12\x13\n\x0b\x61ssigned_id\x18\x02 \x02(\r\x12+\n\tdirection\x18\x03 \x01(\x0e\x32\x18.messenger.msg_direction\"f\n\x04\x64\x61ta\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12&\n\tdest_user\x18\x02 \x03(\x0b\x32\x13.messenger.msg_user\x12\x0f\n\x07message\x18\x03 \x02(\t\"\x86\x01\n\x08\x64\x61ta_ack\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12&\n\tdest_user\x18\x02 \x02(\x0b\x32\x13.messenger.msg_user\x12+\n\tdirection\x18\x03 \x01(\x0e\x32\x18.messenger.msg_direction\"5\n\x0c\x64iscover_req\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\"Y\n\rdiscover_resp\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12!\n\x04user\x18\x02 \x03(\x0b\x32\x13.messenger.msg_user\"?\n\x06\x61\x63tive\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12\x0e\n\x06period\x18\x02 \x01(\r\"-\n\x04\x65xit\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header*z\n\x08msg_type\x12\x0c\n\x08\x43ONN_REQ\x10\x01\x12\r\n\tCONN_RESP\x10\x02\x12\x08\n\x04\x44\x41TA\x10\x03\x12\x0c\n\x08\x44\x41TA_ACK\x10\x04\x12\x10\n\x0c\x44ISCOVER_REQ\x10\x05\x12\x11\n\rDISCOVER_RESP\x10\x06\x12\n\n\x06\x41\x43TIVE\x10\x07\x12\x08\n\x04\x45XIT\x10\x08*1\n\rmsg_direction\x12\x0e\n\nSUCCESSFUL\x10\x01\x12\x10\n\x0cUNSUCCESSFUL\x10\x02')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fmessenger.proto\x12\tmessenger\"\xa7\x04\n\x0fproject_message\x12+\n\x0c\x63onn_req_msg\x18\x01 \x01(\x0b\x32\x13.messenger.conn_reqH\x00\x12-\n\rconn_resp_msg\x18\x02 \x01(\x0b\x32\x14.messenger.conn_respH\x00\x12\x35\n\x11\x63onn_resp_ack_msg\x18\x03 \x01(\x0b\x32\x18.messenger.conn_resp_ackH\x00\x12#\n\x08\x64\x61ta_msg\x18\x04 \x01(\x0b\x32\x0f.messenger.dataH\x00\x12+\n\x0c\x64\x61ta_ack_msg\x18\x05 \x01(\x0b\x32\x13.messenger.data_ackH\x00\x12\x33\n\x10\x64iscover_req_msg\x18\x06 \x01(\x0b\x32\x17.messenger.discover_reqH\x00\x12\x35\n\x11\x64iscover_resp_msg\x18\x07 \x01(\x0b\x32\x18.messenger.discover_respH\x00\x12=\n\x15\x64iscover_resp_ack_msg\x18\x08 \x01(\x0b\x32\x1c.messenger.discover_resp_ackH\x00\x12\'\n\nstatus_msg\x18\t \x01(\x0b\x32\x11.messenger.statusH\x00\x12/\n\x0estatus_ack_msg\x18\n \x01(\x0b\x32\x15.messenger.status_ackH\x00\x12#\n\x08\x65xit_msg\x18\x0b \x01(\x0b\x32\x0f.messenger.exitH\x00\x42\x05\n\x03msg\";\n\nmsg_header\x12\n\n\x02id\x18\x01 \x01(\r\x12!\n\x04type\x18\x02 \x01(\x0e\x32\x13.messenger.msg_type\"$\n\x08msg_user\x12\n\n\x02id\x18\x01 \x02(\r\x12\x0c\n\x04name\x18\x02 \x01(\t\"?\n\x08\x63onn_req\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12\x0c\n\x04name\x18\x02 \x02(\t\"t\n\tconn_resp\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12\x13\n\x0b\x61ssigned_id\x18\x02 \x02(\r\x12+\n\tdirection\x18\x03 \x01(\x0e\x32\x18.messenger.msg_direction\"c\n\rconn_resp_ack\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12+\n\tdirection\x18\x03 \x01(\x0e\x32\x18.messenger.msg_direction\"f\n\x04\x64\x61ta\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12&\n\tdest_user\x18\x02 \x03(\x0b\x32\x13.messenger.msg_user\x12\x0f\n\x07message\x18\x03 \x02(\t\"\x86\x01\n\x08\x64\x61ta_ack\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12&\n\tdest_user\x18\x02 \x02(\x0b\x32\x13.messenger.msg_user\x12+\n\tdirection\x18\x03 \x01(\x0e\x32\x18.messenger.msg_direction\"5\n\x0c\x64iscover_req\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\"Y\n\rdiscover_resp\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12!\n\x04user\x18\x02 \x03(\x0b\x32\x13.messenger.msg_user\"g\n\x11\x64iscover_resp_ack\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12+\n\tdirection\x18\x03 \x01(\x0e\x32\x18.messenger.msg_direction\"?\n\x06status\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12\x0e\n\x06status\x18\x02 \x02(\r\"`\n\nstatus_ack\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header\x12+\n\tdirection\x18\x03 \x01(\x0e\x32\x18.messenger.msg_direction\"-\n\x04\x65xit\x12%\n\x06header\x18\x01 \x02(\x0b\x32\x15.messenger.msg_header*\xb4\x01\n\x08msg_type\x12\x0c\n\x08\x43ONN_REQ\x10\x01\x12\r\n\tCONN_RESP\x10\x02\x12\x11\n\rCONN_RESP_ACK\x10\x03\x12\x08\n\x04\x44\x41TA\x10\x04\x12\x0c\n\x08\x44\x41TA_ACK\x10\x05\x12\x10\n\x0c\x44ISCOVER_REQ\x10\x06\x12\x11\n\rDISCOVER_RESP\x10\x07\x12\x15\n\x11\x44ISCOVER_RESP_ACK\x10\x08\x12\n\n\x06STATUS\x10\t\x12\x0e\n\nSTATUS_ACK\x10\n\x12\x08\n\x04\x45XIT\x10\x0b*1\n\rmsg_direction\x12\x0e\n\nSUCCESSFUL\x10\x01\x12\x10\n\x0cUNSUCCESSFUL\x10\x02')
 
 _MSG_TYPE = DESCRIPTOR.enum_types_by_name['msg_type']
 msg_type = enum_type_wrapper.EnumTypeWrapper(_MSG_TYPE)
@@ -23,12 +23,15 @@ _MSG_DIRECTION = DESCRIPTOR.enum_types_by_name['msg_direction']
 msg_direction = enum_type_wrapper.EnumTypeWrapper(_MSG_DIRECTION)
 CONN_REQ = 1
 CONN_RESP = 2
-DATA = 3
-DATA_ACK = 4
-DISCOVER_REQ = 5
-DISCOVER_RESP = 6
-ACTIVE = 7
-EXIT = 8
+CONN_RESP_ACK = 3
+DATA = 4
+DATA_ACK = 5
+DISCOVER_REQ = 6
+DISCOVER_RESP = 7
+DISCOVER_RESP_ACK = 8
+STATUS = 9
+STATUS_ACK = 10
+EXIT = 11
 SUCCESSFUL = 1
 UNSUCCESSFUL = 2
 
@@ -38,11 +41,14 @@ _MSG_HEADER = DESCRIPTOR.message_types_by_name['msg_header']
 _MSG_USER = DESCRIPTOR.message_types_by_name['msg_user']
 _CONN_REQ = DESCRIPTOR.message_types_by_name['conn_req']
 _CONN_RESP = DESCRIPTOR.message_types_by_name['conn_resp']
+_CONN_RESP_ACK = DESCRIPTOR.message_types_by_name['conn_resp_ack']
 _DATA = DESCRIPTOR.message_types_by_name['data']
 _DATA_ACK = DESCRIPTOR.message_types_by_name['data_ack']
 _DISCOVER_REQ = DESCRIPTOR.message_types_by_name['discover_req']
 _DISCOVER_RESP = DESCRIPTOR.message_types_by_name['discover_resp']
-_ACTIVE = DESCRIPTOR.message_types_by_name['active']
+_DISCOVER_RESP_ACK = DESCRIPTOR.message_types_by_name['discover_resp_ack']
+_STATUS = DESCRIPTOR.message_types_by_name['status']
+_STATUS_ACK = DESCRIPTOR.message_types_by_name['status_ack']
 _EXIT = DESCRIPTOR.message_types_by_name['exit']
 project_message = _reflection.GeneratedProtocolMessageType('project_message', (_message.Message,), {
   'DESCRIPTOR' : _PROJECT_MESSAGE,
@@ -79,6 +85,13 @@ conn_resp = _reflection.GeneratedProtocolMessageType('conn_resp', (_message.Mess
   })
 _sym_db.RegisterMessage(conn_resp)
 
+conn_resp_ack = _reflection.GeneratedProtocolMessageType('conn_resp_ack', (_message.Message,), {
+  'DESCRIPTOR' : _CONN_RESP_ACK,
+  '__module__' : 'messenger_pb2'
+  # @@protoc_insertion_point(class_scope:messenger.conn_resp_ack)
+  })
+_sym_db.RegisterMessage(conn_resp_ack)
+
 data = _reflection.GeneratedProtocolMessageType('data', (_message.Message,), {
   'DESCRIPTOR' : _DATA,
   '__module__' : 'messenger_pb2'
@@ -107,12 +120,26 @@ discover_resp = _reflection.GeneratedProtocolMessageType('discover_resp', (_mess
   })
 _sym_db.RegisterMessage(discover_resp)
 
-active = _reflection.GeneratedProtocolMessageType('active', (_message.Message,), {
-  'DESCRIPTOR' : _ACTIVE,
+discover_resp_ack = _reflection.GeneratedProtocolMessageType('discover_resp_ack', (_message.Message,), {
+  'DESCRIPTOR' : _DISCOVER_RESP_ACK,
   '__module__' : 'messenger_pb2'
-  # @@protoc_insertion_point(class_scope:messenger.active)
+  # @@protoc_insertion_point(class_scope:messenger.discover_resp_ack)
   })
-_sym_db.RegisterMessage(active)
+_sym_db.RegisterMessage(discover_resp_ack)
+
+status = _reflection.GeneratedProtocolMessageType('status', (_message.Message,), {
+  'DESCRIPTOR' : _STATUS,
+  '__module__' : 'messenger_pb2'
+  # @@protoc_insertion_point(class_scope:messenger.status)
+  })
+_sym_db.RegisterMessage(status)
+
+status_ack = _reflection.GeneratedProtocolMessageType('status_ack', (_message.Message,), {
+  'DESCRIPTOR' : _STATUS_ACK,
+  '__module__' : 'messenger_pb2'
+  # @@protoc_insertion_point(class_scope:messenger.status_ack)
+  })
+_sym_db.RegisterMessage(status_ack)
 
 exit = _reflection.GeneratedProtocolMessageType('exit', (_message.Message,), {
   'DESCRIPTOR' : _EXIT,
@@ -124,30 +151,36 @@ _sym_db.RegisterMessage(exit)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _MSG_TYPE._serialized_start=1203
-  _MSG_TYPE._serialized_end=1325
-  _MSG_DIRECTION._serialized_start=1327
-  _MSG_DIRECTION._serialized_end=1376
+  _MSG_TYPE._serialized_start=1670
+  _MSG_TYPE._serialized_end=1850
+  _MSG_DIRECTION._serialized_start=1852
+  _MSG_DIRECTION._serialized_end=1901
   _PROJECT_MESSAGE._serialized_start=31
-  _PROJECT_MESSAGE._serialized_end=415
-  _MSG_HEADER._serialized_start=417
-  _MSG_HEADER._serialized_end=481
-  _MSG_USER._serialized_start=483
-  _MSG_USER._serialized_end=519
-  _CONN_REQ._serialized_start=521
-  _CONN_REQ._serialized_end=584
-  _CONN_RESP._serialized_start=586
-  _CONN_RESP._serialized_end=702
-  _DATA._serialized_start=704
-  _DATA._serialized_end=806
-  _DATA_ACK._serialized_start=809
-  _DATA_ACK._serialized_end=943
-  _DISCOVER_REQ._serialized_start=945
-  _DISCOVER_REQ._serialized_end=998
-  _DISCOVER_RESP._serialized_start=1000
-  _DISCOVER_RESP._serialized_end=1089
-  _ACTIVE._serialized_start=1091
-  _ACTIVE._serialized_end=1154
-  _EXIT._serialized_start=1156
-  _EXIT._serialized_end=1201
+  _PROJECT_MESSAGE._serialized_end=582
+  _MSG_HEADER._serialized_start=584
+  _MSG_HEADER._serialized_end=643
+  _MSG_USER._serialized_start=645
+  _MSG_USER._serialized_end=681
+  _CONN_REQ._serialized_start=683
+  _CONN_REQ._serialized_end=746
+  _CONN_RESP._serialized_start=748
+  _CONN_RESP._serialized_end=864
+  _CONN_RESP_ACK._serialized_start=866
+  _CONN_RESP_ACK._serialized_end=965
+  _DATA._serialized_start=967
+  _DATA._serialized_end=1069
+  _DATA_ACK._serialized_start=1072
+  _DATA_ACK._serialized_end=1206
+  _DISCOVER_REQ._serialized_start=1208
+  _DISCOVER_REQ._serialized_end=1261
+  _DISCOVER_RESP._serialized_start=1263
+  _DISCOVER_RESP._serialized_end=1352
+  _DISCOVER_RESP_ACK._serialized_start=1354
+  _DISCOVER_RESP_ACK._serialized_end=1457
+  _STATUS._serialized_start=1459
+  _STATUS._serialized_end=1522
+  _STATUS_ACK._serialized_start=1524
+  _STATUS_ACK._serialized_end=1620
+  _EXIT._serialized_start=1622
+  _EXIT._serialized_end=1667
 # @@protoc_insertion_point(module_scope)

@@ -1,6 +1,7 @@
 tha leitourgei enas kentrikos server, ola ta minimata tha stelnontai mono ston server
 meta o server tha diavazei sto header tou minimatos ton proorismo tou kai tha proothei
 ston user me to katallilo id
+-> otan stelnetai ena minima me dest_user_id 0 tote to minima ginetai broadcast se olous tous active users
 
 molis syndethei o client sto server:
 1 -> client stelnei CONN_REQ dinontas to onoma tou

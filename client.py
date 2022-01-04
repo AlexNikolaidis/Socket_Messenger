@@ -26,7 +26,7 @@ def initialize_connection():
     msg.conn_req_msg.header.type = 1
     send_msg = msg.SerializeToString()
     client.sendall(send_msg)
-    print('[SENT CONN_REQ]->', end='')
+    print('[SENT CONN_REQ]')
     # waits to receive CONN_RESP message
     buf_data = client.recv(1500)
     msg = messenger_pb2.project_message()
@@ -34,15 +34,22 @@ def initialize_connection():
     msg_type = msg.WhichOneof('msg')
     # checks if the correct message type was received
     if msg_type == 'conn_resp_msg':
-        print('[RECEIVED CONN_RESP]->', end='')
+        print('[RECEIVED CONN_RESP]')
         if msg.conn_resp_msg.direction == 1:
             # saves the assigned id from received message
             user_id = msg.conn_resp_msg.assigned_id
-            print('[SUCCESSFUL CONN HANDSHAKE]->', end='')
             print(f'[ID IS {user_id}]')
+            msg = messenger_pb2.project_message()
+            msg.conn_resp_ack_msg.header.type = 3
+            msg.conn_resp_ack_msg.header.id = user_id
+            msg.conn_resp_ack_msg.direction = 1
+            send_msg = msg.SerializeToString()
+            client.sendall(send_msg)
+            print('[SENT CONN_RESP_ACK]')
+            print('[SUCCESSFUL CONN HANDSHAKE]')
             return user_id
     else:
-        print('[UNSUCCESSFUL CONN HANDSHAKE]->', end='')
+        print('[UNSUCCESSFUL CONN HANDSHAKE]')
         print('[DID\'T RECEIVE ID]')
         return -1
 
@@ -73,37 +80,6 @@ def discovery(user_id):
         print('[UNSUCCESSFUL CONN HANDSHAKE]->', end='')
         print('[DID\'T RECEIVE ID]')
         return 1
-
-
-# def main():
-#
-#     global end_conn_lock
-#     # the executable in iperf command required in NEAT_MEAS
-#     # {iperf_command} -c HOST -t INTERVAL -p PORT
-#     iperf_command = './iperf'
-#
-#     send_conn()
-#     # HELLO_MSG need new thread as need to be sent concurrently to other messages
-#     hello_thread = threading.Thread(target=send_hello, args=(interv,))
-#     hello = hello_thread.start()
-#     # time.sleep(1)
-#     netstat = send_netstat()
-#     # time.sleep(1)
-#     netmeas = send_netmeas(iperf_command)
-#     # signals send_hello function to exit on next interval
-#     end_conn_lock = True
-#     hello_thread.join()
-#     if not hello and not netstat and not netmeas:
-#         print('[SUCCESSFUL EXECUTION]')
-#         print('[EXITING]')
-#         return 0
-#     if hello:
-#         print('[FAILED HELLO]')
-#     if netstat:
-#         print('[FAILED NETSTAT]')
-#     if netmeas:
-#         print('[FAILED NETMEAS]')
-#     print('[EXITING]')
 
 
 def main():

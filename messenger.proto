@@ -6,30 +6,31 @@ message project_message {
 	oneof msg {
               conn_req conn_req_msg = 1;
               conn_resp conn_resp_msg = 2;
-              data data_msg = 3;
-              data_ack data_ack_msg = 4;
-              discover_req discover_req_msg = 5;
-              discover_resp discover_resp_msg = 6;
-              active active_msg = 7;
-              exit exit_msg = 8;
+              conn_resp_ack conn_resp_ack_msg = 3;
+              data data_msg = 4;
+              data_ack data_ack_msg = 5;
+              discover_req discover_req_msg = 6;
+              discover_resp discover_resp_msg = 7;
+              discover_resp_ack discover_resp_ack_msg = 8;
+              status status_msg = 9;
+              status_ack status_ack_msg = 10;
+              exit exit_msg = 11;
 	}
-}
-
-message msg_header{
-  optional uint32 user_id = 1;
-  optional msg_type type = 2;
 }
 
 enum msg_type{
   //Type of messages
   CONN_REQ = 1;
   CONN_RESP = 2;
-  DATA  = 3;
-  DATA_ACK = 4;
-  DISCOVER_REQ = 5;
-  DISCOVER_RESP = 6;
-  ACTIVE = 7;
-  EXIT = 8;
+  CONN_RESP_ACK = 3;
+  DATA  = 4;
+  DATA_ACK = 5;
+  DISCOVER_REQ = 6;
+  DISCOVER_RESP = 7;
+  DISCOVER_RESP_ACK = 8;
+  STATUS = 9;
+  STATUS_ACK = 10;
+  EXIT = 11;
 }
 
 enum msg_direction{
@@ -37,10 +38,15 @@ enum msg_direction{
   UNSUCCESSFUL = 2;
 }
 
+message msg_header{
+  optional uint32 id = 1;
+  optional msg_type type = 2;
+}
+
 message msg_user
 {
   required uint32 id = 1;
-  required string name = 2;
+  optional string name = 2;
 }
 
 message conn_req{
@@ -51,6 +57,11 @@ message conn_req{
 message conn_resp{
   required msg_header header = 1;
   required uint32 assigned_id = 2;
+  optional msg_direction direction = 3;
+}
+
+message conn_resp_ack{
+  required msg_header header = 1;
   optional msg_direction direction = 3;
 }
 
@@ -75,9 +86,19 @@ message discover_resp{
   repeated msg_user user = 2;
 }
 
-message active{
+message discover_resp_ack{
   required msg_header header = 1;
-  optional uint32 period = 2;
+  optional msg_direction direction = 3;
+}
+
+message status{
+  required msg_header header = 1;
+  required uint32 status = 2;
+}
+
+message status_ack{
+  required msg_header header = 1;
+  optional msg_direction direction = 3;
 }
 
 message exit{
