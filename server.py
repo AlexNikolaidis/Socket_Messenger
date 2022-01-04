@@ -15,6 +15,9 @@ ADDR = (HOST, PORT)
 #
 #
 
+test_array = [[1, 2, 3, 'test1'], [4, 5, 6, 'test2'], [7, 8, 9, 'test3']]
+
+
 class Client:
     def __init__(self, conn, user_id, status):
         self.conn = conn
@@ -46,7 +49,7 @@ class Client:
             msg_type = msg.WhichOneof('msg')
             if msg_type == 'conn_resp_ack_msg':
                 if msg.conn_resp_ack_msg.direction == 1:
-                    print(f'[SUCCESSFUL CONN HANDSHAKE (ID: {self.user_id})]')
+                    print(f'[USER {self.user_id}: SUCCESSFUL CONN HANDSHAKE]')
                     return name
                 else:
                     return -1
@@ -57,9 +60,9 @@ class Client:
 
 
 class Messenger:
-    def __init__(self, addr, clients):
+    def __init__(self, addr):
         self.addr = addr
-        self.clients = clients
+        self.clients = [[]]
 
     def run_server(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -68,6 +71,7 @@ class Messenger:
         print(f'[STARTED SERVER ON {self.addr}]')
         s.listen()
         assigned_user_id = 0
+        self.clients.pop(0)
         while True:
             conn, addr = s.accept()
             started_thread = False
@@ -93,46 +97,26 @@ class Messenger:
 
     def run_discovery(self, user_id):
         discovered_users = self.clients
-        for index, element in enumerate(discovered_users):
-            if user_id in element[2]:
+        # print(discovered_users)
+        for x, element in enumerate(discovered_users):
+            if user_id == element[2]:
                 break
-        discovered_users = discovered_users.pop(index)
+        discovered_users.pop(x)
         return discovered_users
-
 
     def new_client(self, conn, user_id):
         client = Client(conn, user_id, 0)
+        print(self.clients)
         for x, element in enumerate(self.clients):
-            if user_id in element[2]:
+            if user_id == element[2]:
                 break
 
         # saves client's name
-        self.clients[x][3] = client.conn_handshake()
-        name = self.clients[index][3]
+        self.clients[x].append(client.conn_handshake())
+        name = self.clients[x][3]
         if name == -1:
-            print(f'[USER {user_id}: SOME ERROR OCCURRED')
+            print(f'[USER {user_id}: SOME ERROR OCCURRED]')
             return -1
-        msg = messenger_pb2.project_message()
-        msg.data_msg.header.id = 0
-        msg.data_msg.header.type = 4
-        user = msg.data_msg.dest_user.add()
-        user.id = user_id
-        user.name = name
-        msg.data_msg.message = f'Welcome {name}!'
-        send_msg = msg.SerializeToString()
-        client.conn.sendall(send_msg)
-        # waits for ack
-        buf_data = conn.recv(1500)
-        msg = messenger_pb2.project_message()
-        msg.ParseFromString(buf_data)
-        msg_type = msg.WhichOneof('msg')
-        if msg_type == "data_ack_msg":
-            if msg.direction == 2:
-                client.conn.close()
-                print(f'[USER {user_id}: SOME ERROR OCCURRED')
-                print(f'[USER {user_id}: DISCONNECTED')
-                return -1
-
         disconnect = False
 
         while not disconnect:
@@ -143,27 +127,44 @@ class Messenger:
             msg_type = msg.WhichOneof('msg')
             if msg_type == 'discover_req_msg':
                 disc = self.run_discovery(user_id)
-                msg = messenger_pb2.project_message()
-                msg.data_msg.header.id = 0
-                msg.data_msg.header.type = 7
-                for element in disc:
-                    user = msg.discovery_resp_msg.user.add()
-                    user.id = element[2]
-                    user.name = element[3]
-                send_msg = msg.SerializeToString()
-                client.conn.sendall(send_msg)
-                # waits for ack
-                buf_data = conn.recv(1500)
-                msg = messenger_pb2.project_message()
-                msg.ParseFromString(buf_data)
-                msg_type = msg.WhichOneof('msg')
-                if msg_type == "discovery_resp_ack_msg":
-                    if msg.direction == 2:
+                if disc:
+                    msg = messenger_pb2.project_message()
+                    msg.discover_resp_msg.header.id = 0
+                    msg.discover_resp_msg.header.type = 7
+                    for element in disc:
+                        user = msg.discover_resp_msg.user.add()
+                        user.id = element[2]
+                        user.name = element[3]
+                    send_msg = msg.SerializeToString()
+                    client.conn.sendall(send_msg)
+                    # waits for ack
+                    buf_data = conn.recv(1500)
+                    msg = messenger_pb2.project_message()
+                    msg.ParseFromString(buf_data)
+                    msg_type = msg.WhichOneof('msg')
+                    if msg_type == "discovery_resp_ack_msg":
+                        if msg.direction == 2:
+                            disconnect = True
+                            print(f'[USER {user_id}: SOME ERROR OCCURRED]')
+                    else:
                         disconnect = True
-                        print(f'[USER {user_id}: SOME ERROR OCCURRED')
+                        print(f'[USER {user_id}: SOME ERROR OCCURRED]')
                 else:
-                    disconnect = True
-                    print(f'[USER {user_id}: SOME ERROR OCCURRED')
+                    msg = messenger_pb2.project_message()
+                    msg.discover_resp_msg.header.id = 0
+                    msg.discover_resp_msg.header.type = 7
+                    send_msg = msg.SerializeToString()
+                    client.conn.sendall(send_msg)
+                    # waits for ack
+                    buf_data = conn.recv(1500)
+                    msg = messenger_pb2.project_message()
+                    msg.ParseFromString(buf_data)
+                    msg_type = msg.WhichOneof('msg')
+                    if msg_type == "discovery_resp_ack_msg":
+                        if msg.direction == 2:
+                            disconnect = True
+                            print(f'[USER {user_id}: SOME ERROR OCCURRED]')
+
             elif msg_type == 'exit_msg':
                 disconnect = True
             elif msg_type == 'status_msg':
@@ -177,20 +178,17 @@ class Messenger:
                 client.conn.sendall(send_msg)
 
             elif msg_type == 'data_msg':
+                pass
 
 
         # time.sleep(15)
         client.conn.close()
-        print(f'[USER {user_id}: DISCONNECTED')
-
+        print(f'[USER {user_id}: DISCONNECTED]')
 
 
 def main():
-    clients = [[]]
-    server = Messenger(ADDR, clients)
+    server = Messenger(ADDR)
     server.run_server()
-
-
 
 
 if __name__ ==  "__main__":

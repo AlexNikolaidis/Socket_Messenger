@@ -57,8 +57,8 @@ def initialize_connection():
 def discovery(user_id):
     # sends DISCOVER message
     msg = messenger_pb2.project_message()
-    msg.discover_req_msg.header.type = 5
-    msg.discover_req_msg.header.user_id = user_id
+    msg.discover_req_msg.header.type = 6
+    msg.discover_req_msg.header.id = user_id
     send_msg = msg.SerializeToString()
     client.sendall(send_msg)
     print('[SENT DISCOVER_REQ]->', end='')
@@ -70,20 +70,21 @@ def discovery(user_id):
     # checks if the correct message type was received
     if msg_type == 'discover_resp_msg':
         print('[RECEIVED DISCOVER_RESP]->', end='')
-        if msg.discover_resp_msg.direction == 1:
-            # saves the discovered users on a list
-            discovered_users = msg.discover_resp_msg.user
-            print('[SUCCESSFUL DISCOVER HANDSHAKE]->', end='')
-            print(f'[DISCOVERED USERS ARE {discovered_users}]')
-            return discovered_users
+        # saves the discovered users on a list
+        discovered_users = msg.discover_resp_msg.user
+        print('[SUCCESSFUL DISCOVER HANDSHAKE]->', end='')
+        print(f'[DISCOVERED USERS ARE {discovered_users}]')
+        return discovered_users
     else:
-        print('[UNSUCCESSFUL CONN HANDSHAKE]->', end='')
-        print('[DID\'T RECEIVE ID]')
+        print('[UNSUCCESSFUL DISCOVER HANDSHAKE]->', end='')
+        print('[DID\'T RECEIVE DISCOVERED USERS]')
         return 1
 
 
 def main():
-    initialize_connection()
+    id = initialize_connection()
+    time.sleep(2)
+    discovery(id)
 
 
 if __name__ == '__main__':
