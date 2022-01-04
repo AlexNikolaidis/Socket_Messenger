@@ -85,10 +85,10 @@ def disconnect(user_id):
 
 def main():
     id = initialize_connection()
-    time.sleep(5)
+    time.sleep(4)
     # discovery(id)
     disconnect(id)
-    # client.close()
+    client.close()
 
 
 if __name__ == '__main__':
