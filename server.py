@@ -1,8 +1,6 @@
 import messenger_pb2
 import threading
 import socket
-import time
-
 
 HOST = '0.0.0.0'
 PORT = 65432
@@ -63,6 +61,7 @@ class Messenger:
     def __init__(self, addr):
         self.addr = addr
         self.clients = [[]]
+        self.ids = [[]]
 
     def run_server(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -70,43 +69,39 @@ class Messenger:
         s.bind(self.addr)
         print(f'[STARTED SERVER ON {self.addr}]')
         s.listen()
-        assigned_user_id = 0
         self.clients.pop(0)
+        assigned_user_id = 1
         while True:
             conn, addr = s.accept()
             started_thread = False
             for iter in self.clients:
                 if len(iter) != 0:
                     if not iter[0].is_alive():
-                        iter[0] = threading.Thread(target=self.new_client, args=(conn, iter[1]))
+                        iter[0] = threading.Thread(target=self.new_client, args=(conn, iter[2]))
                         iter[0].start()
                         started_thread = True
-                        assigned_user_id += 1
-                        print(f'[STARTED NEW THREAD FOR USER WITH ID {iter[1]}]')
+                        print(f'[STARTED NEW THREAD FOR USER WITH ID {iter[2]}]')
                         break
             if not started_thread:
-                assigned_user_id += 1
-                # users list: for each user -> [user thread, user connection, user id]
                 self.clients.append([threading.Thread(target=self.new_client, args=(conn, assigned_user_id)),
                                      conn, assigned_user_id])
                 self.clients[len(self.clients) - 1][0].start()
-                started_thread = True
-
                 print(f'[STARTED NEW THREAD FOR USER WITH ID {assigned_user_id}]')
-                print(f'current clients: {threading.active_count() - 1}')
+                assigned_user_id += 1
+            print(f'connected clients: {threading.active_count() - 1}')
 
     def run_discovery(self, user_id):
         discovered_users = self.clients
         # print(discovered_users)
-        for x, element in enumerate(discovered_users):
+        for enum, element in enumerate(discovered_users):
             if user_id == element[2]:
                 break
-        discovered_users.pop(x)
+        discovered_users.pop(enum)
         return discovered_users
 
     def new_client(self, conn, user_id):
         client = Client(conn, user_id, 0)
-        print(self.clients)
+        # print(self.clients)
         for x, element in enumerate(self.clients):
             if user_id == element[2]:
                 break
@@ -182,6 +177,8 @@ class Messenger:
 
 
         # time.sleep(15)
+        # i = self.ids.index((user_id, True))
+        # self.ids[i] = (user_id, False)
         client.conn.close()
         print(f'[USER {user_id}: DISCONNECTED]')
 
@@ -191,5 +188,5 @@ def main():
     server.run_server()
 
 
-if __name__ ==  "__main__":
+if __name__ == "__main__":
     main()

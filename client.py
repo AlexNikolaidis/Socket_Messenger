@@ -1,12 +1,5 @@
 import socket
-import struct
-import threading
-import os
-import subprocess
 import time
-from datetime import datetime
-from requests import get
-from getmac import get_mac_address as gma
 import messenger_pb2
 
 
@@ -81,10 +74,21 @@ def discovery(user_id):
         return 1
 
 
+def disconnect(user_id):
+    msg = messenger_pb2.project_message()
+    msg.exit_msg.header.type = 11
+    msg.exit_msg.header.id = user_id
+    send_msg = msg.SerializeToString()
+    client.sendall(send_msg)
+    print('[SENT EXIT]')
+
+
 def main():
     id = initialize_connection()
-    time.sleep(2)
-    discovery(id)
+    time.sleep(5)
+    # discovery(id)
+    disconnect(id)
+    # client.close()
 
 
 if __name__ == '__main__':
